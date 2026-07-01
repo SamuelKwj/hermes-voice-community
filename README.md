@@ -1,5 +1,7 @@
 # Hermes Voice Community
 
+[中文介绍](README.zh-CN.md)
+
 Hermes Voice Community is the Basic community edition of Hermes Voice: a local desktop voice widget for push-to-talk speech recognition, Hermes Gateway chat, and edge-tts voice playback.
 
 This repository is intended for learning, local testing, and basic Hermes Gateway integration. It is not the full product edition.
