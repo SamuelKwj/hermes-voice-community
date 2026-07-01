@@ -22,6 +22,13 @@ $env:API_SERVER_KEY="your-hermes-gateway-key"
 
 The community edition does not include a built-in default key.
 
+If you do not know this key, ask whoever runs your Hermes Gateway. For a local self-hosted Gateway, the local Hermes process should either:
+
+- run without auth on `127.0.0.1`, in which case `API_SERVER_KEY` can be empty; or
+- generate/configure a key and tell you the exact `API_SERVER_KEY` value.
+
+Chinese setup prompt: [让你的本地 Hermes 接入 Community 版](LOCAL_HERMES_GUIDE.zh-CN.md).
+
 ## Chat Endpoint
 
 The current client calls:

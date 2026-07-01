@@ -40,6 +40,8 @@ Not included:
 - Hermes Gateway running at `http://127.0.0.1:8642` by default
 - `API_SERVER_KEY` configured for your own Hermes Gateway
 
+If you do not know your Gateway key, ask your local Hermes/Gateway provider to start a compatible Gateway and give you `HERMES_GATEWAY_URL` plus `API_SERVER_KEY`. Chinese users can follow [Local Hermes Guide](docs/LOCAL_HERMES_GUIDE.zh-CN.md).
+
 ## Quick Start
 
 Install dependencies:
@@ -119,6 +121,7 @@ Common environment variables:
 - [Usage Guide](docs/USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [Hermes Gateway Integration](docs/HERMES_GATEWAY.md)
+- [Local Hermes Guide zh-CN](docs/LOCAL_HERMES_GUIDE.zh-CN.md)
 - [Community Edition Scope](docs/COMMUNITY_EDITION.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)

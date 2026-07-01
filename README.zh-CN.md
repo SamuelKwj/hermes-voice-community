@@ -38,6 +38,8 @@ Hermes Voice Community 是 Hermes Voice 的 Basic 社区版：一个本地语音
 - Hermes Gateway 默认运行在 `http://127.0.0.1:8642`
 - `API_SERVER_KEY` 需要按你自己的 Hermes Gateway 配置设置
 
+如果你不知道 `API_SERVER_KEY` 是什么，把 [让你的本地 Hermes 接入 Community 版](docs/LOCAL_HERMES_GUIDE.zh-CN.md) 里的任务说明复制给你的本地 Hermes，让它告诉你 Gateway 地址和 key。
+
 ## 快速开始
 
 安装依赖：
@@ -117,6 +119,7 @@ $env:API_SERVER_KEY="your-hermes-gateway-key"
 - [使用说明](docs/USAGE.md)
 - [配置说明](docs/CONFIGURATION.md)
 - [Hermes Gateway 接入](docs/HERMES_GATEWAY.md)
+- [让你的本地 Hermes 接入 Community 版](docs/LOCAL_HERMES_GUIDE.zh-CN.md)
 - [社区版边界](docs/COMMUNITY_EDITION.md)
 - [贡献说明](CONTRIBUTING.md)
 - [安全说明](SECURITY.md)
