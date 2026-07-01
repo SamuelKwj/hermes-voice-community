@@ -153,6 +153,14 @@ Hermes Voice Community 需要你的本地 Hermes Gateway 提供：
 - [支持方式](SUPPORT.md)
 - [协议说明](LICENSE.md)
 
+## 作者
+
+作者：**请叫我奉孝大人**
+
+- GitHub：[@SamuelKwj](https://github.com/SamuelKwj)
+- 抖音号：`52168570433`
+- 相关项目：[PenMoji Content Copilot](https://github.com/SamuelKwj/PenMoji-content-copilot)
+
 ## 协议
 
 本仓库使用自定义 Source-Available Non-Commercial License。

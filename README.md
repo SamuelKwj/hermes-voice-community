@@ -155,6 +155,14 @@ Common environment variables:
 - [Support](SUPPORT.md)
 - [License Status](LICENSE.md)
 
+## Author
+
+Created by **请叫我奉孝大人**
+
+- GitHub: [SamuelKwj](https://github.com/SamuelKwj)
+- Douyin: `52168570433`
+- Related project: [PenMoji Content Copilot](https://github.com/SamuelKwj/PenMoji-content-copilot)
+
 ## License
 
 This repository uses a custom source-available, non-commercial license. See [LICENSE.md](LICENSE.md).
