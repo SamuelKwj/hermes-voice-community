@@ -1,12 +1,39 @@
 # Hermes Voice Community
 
-Hermes Voice Community 是 Hermes Voice 的 Basic 社区版：一个本地语音桌面悬浮窗，支持按住说话、本地语音识别、调用 Hermes Gateway，并用 edge-tts 播放语音回复。
+![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4)
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
+![本地识别](https://img.shields.io/badge/STT-faster--whisper-22C55E)
+![Hermes Gateway](https://img.shields.io/badge/Gateway-Hermes-7C3AED)
+![协议](https://img.shields.io/badge/License-Source--available%20NC-F59E0B)
 
-这个仓库适合学习、体验、本地测试和基础接入验证。它不是完整产品版，也不是可直接商用发布的版本。
+**让你的本地 Hermes 开口说话的桌面语音悬浮窗。**
 
-## 它能做什么
+Hermes Voice Community 是 Hermes Voice 的 Basic 社区版：你按住说话，它在本地完成语音识别，把文字交给你的 Hermes Gateway，再把 Hermes 的回复读出来。
 
-已包含：
+它适合已经有本地 Hermes、Agent 或 LLM Gateway 的用户，用来快速获得一个可运行的桌面语音入口。
+
+![Hermes Voice Community 演示图](assets/readme/demo.svg)
+
+## 30 秒看懂
+
+```mermaid
+flowchart LR
+  A[麦克风] --> B[本地 STT<br/>faster-whisper]
+  B --> C[Hermes Gateway<br/>/v1/chat/completions]
+  C --> D[edge-tts]
+  D --> E[扬声器]
+```
+
+你对着桌面悬浮窗说话，程序在本地识别语音，把文本发给你的 Hermes Gateway，然后自动播放 Hermes 的回复。
+
+## 为什么做这个
+
+- 给本地 Hermes 用户一个真正能用的桌面语音入口。
+- 让 Basic 社区版保持简单、可读、可运行。
+- 用清晰的 Gateway 协议接入不同后端，而不是绑定某一个服务。
+- 把高级体验、商业打包、上架发布能力留在完整产品版里。
+
+## 已包含
 
 - 桌面悬浮语音窗口
 - 按住说话
@@ -18,8 +45,9 @@ Hermes Voice Community 是 Hermes Voice 的 Basic 社区版：一个本地语音
 - 系统托盘
 - 本地日志
 - 音频设备检查
+- Gateway 连通测试脚本
 
-不包含：
+## 不包含
 
 - 产品级安装包制作流程
 - 高级悬浮窗交互
@@ -30,16 +58,6 @@ Hermes Voice Community 是 Hermes Voice 的 Basic 社区版：一个本地语音
 - 应用商店发布、代码签名或正式发布流程
 - 跨平台发行能力
 
-## 环境要求
-
-- Windows 10/11
-- Python 3.11+
-- `ffmpeg` 和 `ffplay` 已加入 PATH
-- Hermes Gateway 默认运行在 `http://127.0.0.1:8642`
-- `API_SERVER_KEY` 需要按你自己的 Hermes Gateway 配置设置
-
-如果你不知道 `API_SERVER_KEY` 是什么，把 [让你的本地 Hermes 接入 Community 版](docs/LOCAL_HERMES_GUIDE.zh-CN.md) 里的任务说明复制给你的本地 Hermes，让它告诉你 Gateway 地址和 key。
-
 ## 快速开始
 
 安装依赖：
@@ -48,16 +66,12 @@ Hermes Voice Community 是 Hermes Voice 的 Basic 社区版：一个本地语音
 .\scripts\setup.ps1
 ```
 
-如果 PowerShell 阻止脚本执行：
+让你的本地 Hermes 提供一个兼容 Gateway。如果你不知道 `API_SERVER_KEY` 是什么，把 [让你的本地 Hermes 接入 Community 版](docs/LOCAL_HERMES_GUIDE.zh-CN.md) 里的任务说明复制给它。
+
+测试 Gateway：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
-```
-
-设置 Hermes Gateway 密钥：
-
-```powershell
-$env:API_SERVER_KEY="your-hermes-gateway-key"
+.\scripts\test_gateway.ps1
 ```
 
 启动桌面版：
@@ -66,20 +80,40 @@ $env:API_SERVER_KEY="your-hermes-gateway-key"
 .\scripts\start.ps1
 ```
 
-也可以手动启动：
+如果你的 Gateway 地址或 key 不是默认值：
 
 ```powershell
-.\.venv\Scripts\python.exe launcher.py
+$env:HERMES_GATEWAY_URL="http://127.0.0.1:8642"
+$env:API_SERVER_KEY="your-hermes-gateway-key"
+.\scripts\start.ps1
 ```
 
-## 使用方式
+## 环境要求
 
-1. 先启动 Hermes Gateway。
-2. 启动 Hermes Voice Community。
-3. 在悬浮窗中按住说话按钮，或按住配置好的快捷键说话。
-4. 松开后等待识别、发送到 Hermes Gateway、播放回复。
+- Windows 10/11
+- Python 3.11+
+- `ffmpeg` 和 `ffplay` 已加入 PATH
+- 一个兼容 `POST /v1/chat/completions` 的本地 Hermes Gateway
 
-本地接口：
+## Gateway 要求
+
+Hermes Voice Community 需要你的本地 Hermes Gateway 提供：
+
+- `GET /v1/models`
+- `POST /v1/chat/completions`
+- OpenAI 风格的 `messages`
+- 在 `choices[0].message.content` 返回回复内容
+- 可选的 `Authorization: Bearer <API_SERVER_KEY>`
+
+详细说明：
+
+- [Hermes Gateway 接入](docs/HERMES_GATEWAY.md)
+- [让你的本地 Hermes 接入 Community 版](docs/LOCAL_HERMES_GUIDE.zh-CN.md)
+- [架构说明](docs/ARCHITECTURE.md)
+
+## 本地接口
+
+启动后：
 
 - UI: `http://127.0.0.1:8765`
 - 健康检查: `http://127.0.0.1:8765/health`
@@ -120,17 +154,12 @@ $env:API_SERVER_KEY="your-hermes-gateway-key"
 - [配置说明](docs/CONFIGURATION.md)
 - [Hermes Gateway 接入](docs/HERMES_GATEWAY.md)
 - [让你的本地 Hermes 接入 Community 版](docs/LOCAL_HERMES_GUIDE.zh-CN.md)
+- [架构说明](docs/ARCHITECTURE.md)
 - [社区版边界](docs/COMMUNITY_EDITION.md)
 - [贡献说明](CONTRIBUTING.md)
 - [安全说明](SECURITY.md)
 - [支持方式](SUPPORT.md)
 - [协议说明](LICENSE.md)
-
-## 版本定位
-
-Hermes Voice Community 是 Basic 社区版，重点是让开发者能看懂、能跑起来、能接入 Hermes Gateway。
-
-如果一个功能会明显增加产品复杂度、发布成本，或属于完整产品体验的一部分，它通常不会直接进入这个社区版。
 
 ## 协议
 

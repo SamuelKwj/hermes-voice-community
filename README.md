@@ -2,13 +2,40 @@
 
 [中文介绍](README.zh-CN.md)
 
-Hermes Voice Community is the Basic community edition of Hermes Voice: a local desktop voice widget for push-to-talk speech recognition, Hermes Gateway chat, and edge-tts voice playback.
+![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D4)
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)
+![Local STT](https://img.shields.io/badge/STT-faster--whisper-22C55E)
+![Hermes Gateway](https://img.shields.io/badge/Gateway-Hermes-7C3AED)
+![License](https://img.shields.io/badge/License-Source--available%20NC-F59E0B)
 
-This repository is intended for learning, local testing, and basic Hermes Gateway integration. It is not the full product edition.
+**A local voice desktop widget that lets your Hermes talk back.**
 
-## Features
+Hermes Voice Community is the Basic community edition of Hermes Voice. Hold to talk, transcribe locally, send the text to your Hermes Gateway, and hear the response through edge-tts.
 
-Included:
+It is built for people who already run a local Hermes, agent, or LLM gateway and want a simple desktop voice entrance.
+
+![Hermes Voice Community demo](assets/readme/demo.svg)
+
+## 30-Second Overview
+
+```mermaid
+flowchart LR
+  A[Microphone] --> B[Local STT<br/>faster-whisper]
+  B --> C[Hermes Gateway<br/>/v1/chat/completions]
+  C --> D[edge-tts]
+  D --> E[Speaker]
+```
+
+You speak into the desktop widget. The app turns your voice into text locally, sends it to your Hermes Gateway, then reads the answer back.
+
+## Why This Exists
+
+- Give local Hermes users a real desktop voice entry point.
+- Keep the Basic edition easy to read, run, and extend.
+- Provide a clean Gateway contract instead of locking users into one backend.
+- Let the full product edition keep advanced experience, packaging, and release work separate.
+
+## What Is Included
 
 - Desktop floating voice widget
 - Push-to-talk recording
@@ -20,8 +47,9 @@ Included:
 - System tray entry
 - Local logs
 - Audio device checks
+- Gateway connection test script
 
-Not included:
+## What Is Not Included
 
 - Product-grade app packaging workflow
 - Advanced floating widget interactions
@@ -32,16 +60,6 @@ Not included:
 - Store publishing, code signing, or release workflow
 - Cross-platform distribution support
 
-## Requirements
-
-- Windows 10/11
-- Python 3.11+
-- `ffmpeg` and `ffplay` available in PATH
-- Hermes Gateway running at `http://127.0.0.1:8642` by default
-- `API_SERVER_KEY` configured for your own Hermes Gateway
-
-If you do not know your Gateway key, ask your local Hermes/Gateway provider to start a compatible Gateway and give you `HERMES_GATEWAY_URL` plus `API_SERVER_KEY`. Chinese users can follow [Local Hermes Guide](docs/LOCAL_HERMES_GUIDE.zh-CN.md).
-
 ## Quick Start
 
 Install dependencies:
@@ -50,16 +68,12 @@ Install dependencies:
 .\scripts\setup.ps1
 ```
 
-If PowerShell blocks script execution:
+Ask your local Hermes to provide a compatible Gateway. If you do not know the key, follow the [Local Hermes Guide zh-CN](docs/LOCAL_HERMES_GUIDE.zh-CN.md).
+
+Test the Gateway:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
-```
-
-Set your Hermes Gateway key:
-
-```powershell
-$env:API_SERVER_KEY="your-hermes-gateway-key"
+.\scripts\test_gateway.ps1
 ```
 
 Start the desktop app:
@@ -68,20 +82,40 @@ Start the desktop app:
 .\scripts\start.ps1
 ```
 
-You can also start it manually:
+If your Gateway uses a custom URL or key:
 
 ```powershell
-.\.venv\Scripts\python.exe launcher.py
+$env:HERMES_GATEWAY_URL="http://127.0.0.1:8642"
+$env:API_SERVER_KEY="your-hermes-gateway-key"
+.\scripts\start.ps1
 ```
 
-## Usage
+## Requirements
 
-1. Start Hermes Gateway.
-2. Start Hermes Voice Community.
-3. Hold the talk button, or hold the configured hotkey, and speak.
-4. Release to transcribe, send the text to Hermes Gateway, and play the reply.
+- Windows 10/11
+- Python 3.11+
+- `ffmpeg` and `ffplay` available in PATH
+- A local Hermes Gateway compatible with `POST /v1/chat/completions`
 
-Local endpoints:
+## Gateway Contract
+
+Hermes Voice Community expects your local Hermes Gateway to provide:
+
+- `GET /v1/models`
+- `POST /v1/chat/completions`
+- OpenAI-style `messages`
+- response content at `choices[0].message.content`
+- optional `Authorization: Bearer <API_SERVER_KEY>`
+
+Details:
+
+- [Hermes Gateway Integration](docs/HERMES_GATEWAY.md)
+- [Local Hermes Guide zh-CN](docs/LOCAL_HERMES_GUIDE.zh-CN.md)
+- [Architecture](docs/ARCHITECTURE.md)
+
+## Local Endpoints
+
+After startup:
 
 - UI: `http://127.0.0.1:8765`
 - Health: `http://127.0.0.1:8765/health`
@@ -122,20 +156,12 @@ Common environment variables:
 - [Configuration](docs/CONFIGURATION.md)
 - [Hermes Gateway Integration](docs/HERMES_GATEWAY.md)
 - [Local Hermes Guide zh-CN](docs/LOCAL_HERMES_GUIDE.zh-CN.md)
+- [Architecture](docs/ARCHITECTURE.md)
 - [Community Edition Scope](docs/COMMUNITY_EDITION.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 - [Support](SUPPORT.md)
 - [License Status](LICENSE.md)
-
-## Project Structure
-
-```text
-backend/      Local FastAPI backend, STT, TTS, and Hermes Gateway client
-frontend/     Floating widget UI
-scripts/      Setup and start scripts
-launcher.py   Desktop window entry point
-```
 
 ## License
 
