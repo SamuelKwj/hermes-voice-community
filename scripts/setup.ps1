@@ -17,6 +17,6 @@ else {
     & $Python -m pip install --upgrade pip
     & $Python -m pip install -r (Join-Path $Root "backend\requirements.txt")
 }
-& $Python -c "import fastapi, uvicorn, webview, pystray, PyInstaller; import faster_whisper, edge_tts, sounddevice"
+& $Python -c "import fastapi, uvicorn, webview, pystray; import faster_whisper, edge_tts, sounddevice"
 
 Write-Host "Setup complete. Start with: .\scripts\start.ps1"
