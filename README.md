@@ -51,18 +51,7 @@ You speak into the desktop widget. The app turns your voice into text locally, s
 - Local logs
 - Audio device checks
 - Gateway connection test script
-
-## What Is Not Included
-
-- Product-grade app packaging workflow
-- Advanced floating widget interactions
-- Hands-free mode
-- Wake word flow
-- Performance profiles
-- Deep GPU optimization
-- Store publishing, code signing, or release workflow
-- Cross-platform distribution support
-
+- 
 ## Quick Start
 
 Install dependencies:
