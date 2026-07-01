@@ -8,3 +8,4 @@ dist/
 build/
 *.spec
 !packaging/*.spec
+assets/readme/*.png.png

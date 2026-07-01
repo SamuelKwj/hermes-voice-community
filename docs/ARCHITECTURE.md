@@ -2,6 +2,8 @@
 
 Hermes Voice Community is intentionally small. It has one job: turn local speech into a text request for Hermes Gateway, then play the answer back.
 
+![Hermes Voice Community architecture demo](../assets/readme/demo.svg)
+
 ```mermaid
 flowchart LR
   User[User] --> Mic[Microphone]

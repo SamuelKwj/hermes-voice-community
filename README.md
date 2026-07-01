@@ -14,7 +14,10 @@ Hermes Voice Community is the Basic community edition of Hermes Voice. Hold to t
 
 It is built for people who already run a local Hermes, agent, or LLM gateway and want a simple desktop voice entrance.
 
-![Hermes Voice Community demo](assets/readme/demo.svg)
+<p align="center">
+  <img src="assets/readme/screenshot-main.png" alt="Hermes Voice Community main widget" width="340">
+  <img src="assets/readme/screenshot-settings.png" alt="Hermes Voice Community settings panel" width="340">
+</p>
 
 ## 30-Second Overview
 

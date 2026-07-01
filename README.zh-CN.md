@@ -12,7 +12,10 @@ Hermes Voice Community 是 Hermes Voice 的 Basic 社区版：你按住说话，
 
 它适合已经有本地 Hermes、Agent 或 LLM Gateway 的用户，用来快速获得一个可运行的桌面语音入口。
 
-![Hermes Voice Community 演示图](assets/readme/demo.svg)
+<p align="center">
+  <img src="assets/readme/screenshot-main.png" alt="Hermes Voice Community 主界面" width="340">
+  <img src="assets/readme/screenshot-settings.png" alt="Hermes Voice Community 设置页" width="340">
+</p>
 
 ## 30 秒看懂
 
