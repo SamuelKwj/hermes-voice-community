@@ -1,94 +1,137 @@
-﻿# Hermes Voice Community
+# Hermes Voice Community
 
-Hermes Voice Community 是一个本地语音桌面悬浮窗 Basic 版：按住说话，走本地 STT -> Hermes Gateway -> edge-tts 播放。
+Hermes Voice Community is the Basic community edition of Hermes Voice: a local desktop voice widget for push-to-talk speech recognition, Hermes Gateway chat, and edge-tts voice playback.
 
-## 当前状态
+This repository is intended for learning, local testing, and basic Hermes Gateway integration. It is not the full product edition.
 
-- 基础链路已跑通：录音、识别、LLM 回复、TTS、播放。
-- 基础 UI 可用：桌面悬浮窗、语音波形、按住说话、对话展示。
-- 基础运行能力：健康检查、持久化设置、设置页、首次启动诊断、系统托盘、日志落盘、设备列表、依赖诊断、可配置端口、Windows 启动脚本。
+## Features
 
-## 社区版范围
+Included:
 
-本仓库是 Basic 社区版，适合学习、二次开发和接入 Hermes Gateway。
+- Desktop floating voice widget
+- Push-to-talk recording
+- Local STT with faster-whisper
+- Hermes Gateway integration
+- Voice playback with edge-tts
+- Basic settings panel
+- First-run diagnostics
+- System tray entry
+- Local logs
+- Audio device checks
 
-不包含高级语音体验、性能优化、安装包制作流程和跨平台上架能力。
+Not included:
 
-## 环境要求
+- Product-grade app packaging workflow
+- Advanced floating widget interactions
+- Hands-free mode
+- Wake word flow
+- Performance profiles
+- Deep GPU optimization
+- Store publishing, code signing, or release workflow
+- Cross-platform distribution support
+
+## Requirements
 
 - Windows 10/11
 - Python 3.11+
-- ffmpeg 已加入 PATH
-- Hermes Gateway 默认运行在 `http://127.0.0.1:8642`
-- `API_SERVER_KEY` 需要按你的 Hermes Gateway 配置自行设置
+- `ffmpeg` and `ffplay` available in PATH
+- Hermes Gateway running at `http://127.0.0.1:8642` by default
+- `API_SERVER_KEY` configured for your own Hermes Gateway
 
-## 安装
+## Quick Start
+
+Install dependencies:
 
 ```powershell
 .\scripts\setup.ps1
 ```
 
-如果 PowerShell 阻止脚本执行：
+If PowerShell blocks script execution:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
 ```
 
-## 启动桌面版
+Set your Hermes Gateway key:
+
+```powershell
+$env:API_SERVER_KEY="your-hermes-gateway-key"
+```
+
+Start the desktop app:
 
 ```powershell
 .\scripts\start.ps1
 ```
 
-也可以手动启动：
+You can also start it manually:
 
 ```powershell
 .\.venv\Scripts\python.exe launcher.py
 ```
 
-## 只启动后端调试
+## Usage
 
-```powershell
-.\.venv\Scripts\python.exe backend\run_server.py
-```
+1. Start Hermes Gateway.
+2. Start Hermes Voice Community.
+3. Hold the talk button, or hold the configured hotkey, and speak.
+4. Release to transcribe, send the text to Hermes Gateway, and play the reply.
 
-打开：
+Local endpoints:
 
 - UI: `http://127.0.0.1:8765`
-- 健康检查: `http://127.0.0.1:8765/health`
-- 诊断状态: `http://127.0.0.1:8765/api/status`
-- 音频设备: `http://127.0.0.1:8765/api/devices`
+- Health: `http://127.0.0.1:8765/health`
+- Status: `http://127.0.0.1:8765/api/status`
+- Audio devices: `http://127.0.0.1:8765/api/devices`
 
-## 配置
+## Configuration
 
-用户设置保存在：
+User settings are stored at:
 
 ```text
 %LOCALAPPDATA%\HermesVoiceWidget\settings.json
 ```
 
-日志和模型缓存：
+Logs and model cache:
 
 ```text
 %LOCALAPPDATA%\HermesVoiceWidget\logs\app.log
 %LOCALAPPDATA%\HermesVoiceWidget\models
 ```
 
-常用环境变量：
+Common environment variables:
 
-- `VOICE_WIDGET_HOST`: 默认 `127.0.0.1`
-- `VOICE_WIDGET_PORT`: 默认 `8765`
-- `HERMES_GATEWAY_URL`: 默认 `http://127.0.0.1:8642`
-- `API_SERVER_KEY`: Hermes Gateway 鉴权密钥，默认不内置
-- `VOICE_STT_MODEL`: 默认 `base`
-- `VOICE_STT_LANG`: 默认 `zh`
-- `VOICE_USE_CUDA`: 设为 `1` 时使用 CUDA
-- `VOICE_TTS_VOICE`: 默认 `zh-CN-XiaoxiaoNeural`
+| Variable | Default | Description |
+| --- | --- | --- |
+| `VOICE_WIDGET_HOST` | `127.0.0.1` | Local backend host |
+| `VOICE_WIDGET_PORT` | `8765` | Local backend port |
+| `HERMES_GATEWAY_URL` | `http://127.0.0.1:8642` | Hermes Gateway URL |
+| `API_SERVER_KEY` | empty | Hermes Gateway auth key |
+| `VOICE_STT_MODEL` | `base` | faster-whisper model |
+| `VOICE_STT_LANG` | `zh` | STT language |
+| `VOICE_USE_CUDA` | empty | Set to `1` to try CUDA |
+| `VOICE_TTS_VOICE` | `zh-CN-XiaoxiaoNeural` | edge-tts voice |
 
-## 社区版待办
+## Documentation
 
-1. 补充更清晰的 Hermes Gateway 接入文档。
-2. 增加基础错误报告导出。
-3. 改进首次启动引导。
-4. 补充更多系统兼容性说明。
+- [Usage Guide](docs/USAGE.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [Hermes Gateway Integration](docs/HERMES_GATEWAY.md)
+- [Community Edition Scope](docs/COMMUNITY_EDITION.md)
+- [Contributing](CONTRIBUTING.md)
+- [Security](SECURITY.md)
+- [Support](SUPPORT.md)
+- [License Status](LICENSE.md)
 
+## Project Structure
+
+```text
+backend/      Local FastAPI backend, STT, TTS, and Hermes Gateway client
+frontend/     Floating widget UI
+scripts/      Setup and start scripts
+launcher.py   Desktop window entry point
+```
+
+## License
+
+This repository uses a custom source-available, non-commercial license. See [LICENSE.md](LICENSE.md).
