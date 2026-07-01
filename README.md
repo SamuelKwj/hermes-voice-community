@@ -36,7 +36,7 @@ You speak into the desktop widget. The app turns your voice into text locally, s
 - Give local Hermes users a real desktop voice entry point.
 - Keep the Basic edition easy to read, run, and extend.
 - Provide a clean Gateway contract instead of locking users into one backend.
-- Let the full product edition keep advanced experience, packaging, and release work separate.
+- Keep this repository focused on the code and documentation included here.
 
 ## What Is Included
 
