@@ -82,12 +82,28 @@ $env:API_SERVER_KEY="your-hermes-gateway-key"
 .\scripts\start.ps1
 ```
 
+## New Machine Checklist
+
+On a new Windows machine, verify these first:
+
+```powershell
+ffmpeg -version
+ffplay -version
+.\scripts\test_gateway.ps1
+```
+
+- `ffmpeg` and `ffplay` must be runnable from PowerShell.
+- Hermes Gateway must be running. The default URL is `http://127.0.0.1:8642`.
+- The first transcription may download or load the faster-whisper model. The default model is `base`.
+- Windows must allow microphone access for the app, and the system must have an available input device.
+
 ## Requirements
 
 - Windows 10/11
 - Python 3.11+
 - `ffmpeg` and `ffplay` available in PATH
 - A local Hermes Gateway compatible with `POST /v1/chat/completions`
+- A working microphone and speaker/headphones
 
 ## Gateway Contract
 
@@ -128,6 +144,8 @@ Logs and model cache:
 %LOCALAPPDATA%\HermesVoiceWidget\logs\app.log
 %LOCALAPPDATA%\HermesVoiceWidget\models
 ```
+
+On first STT use, `faster-whisper` downloads or caches model files under the `models` directory above. If model download fails, check network access first, then inspect the log.
 
 Common environment variables:
 

@@ -80,12 +80,28 @@ $env:API_SERVER_KEY="your-hermes-gateway-key"
 .\scripts\start.ps1
 ```
 
+## 新机器运行前检查
+
+在一台新电脑上，先确认这几项：
+
+```powershell
+ffmpeg -version
+ffplay -version
+.\scripts\test_gateway.ps1
+```
+
+- `ffmpeg` / `ffplay` 需要能在 PowerShell 里直接运行。
+- Hermes Gateway 需要先启动，默认地址是 `http://127.0.0.1:8642`。
+- 首次语音识别可能会下载或加载 faster-whisper 模型，默认模型是 `base`。
+- Windows 需要允许本应用使用麦克风，并且系统里要有可用输入设备。
+
 ## 环境要求
 
 - Windows 10/11
 - Python 3.11+
 - `ffmpeg` 和 `ffplay` 已加入 PATH
 - 一个兼容 `POST /v1/chat/completions` 的本地 Hermes Gateway
+- 可用麦克风和扬声器/耳机
 
 ## Gateway 要求
 
@@ -126,6 +142,8 @@ Hermes Voice Community 需要你的本地 Hermes Gateway 提供：
 %LOCALAPPDATA%\HermesVoiceWidget\logs\app.log
 %LOCALAPPDATA%\HermesVoiceWidget\models
 ```
+
+首次使用 STT 时，`faster-whisper` 会把模型下载或缓存到上面的 `models` 目录。如果模型下载失败，请先检查网络，再查看日志。
 
 常用环境变量：
 
